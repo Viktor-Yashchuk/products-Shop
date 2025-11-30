@@ -30,3 +30,10 @@ export const fetchProductsByCategory = async (category) => {
     const { data } = await axios(`${ENDPOINTS.BY_CATEGORY}${category}`);
     return data;
 }
+
+export const fetchProductsBySearch = async (query) => {
+  const {data} = await axios(`${ENDPOINTS.SEARCH_FORM}`, {params: {
+    q: query,
+  }});
+  return data;
+}

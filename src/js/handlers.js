@@ -1,6 +1,6 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import { fetchAllProducts, fetchCategories, fetchProductsByCategory } from './products-api';
+import { fetchAllProducts, fetchCategories, fetchProductsByCategory, fetchProductsBySearch } from './products-api';
 import { clearProduct, renderCategories, renderProducts } from './render-function';
 import { activeFirstBtn, changeActiveBtn } from './helpers';
 import { refs } from './refs';
@@ -47,3 +47,20 @@ export const getProductsByCategory = async (e) => {
     console.log(error);
   }
 }
+
+export const getProductsBySearch = async (event) => {
+  event.preventDefault();
+  const inputValue = event.target.elements.searchValue.value.trim();
+  if(inputValue === ""){
+    iziToast.warning({message: "enter something for search"});
+    return;
+  }
+  try {
+    const data = await fetchProductsBySearch (inputValue);
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+    iziToast.error({ message: 'Oops, something went wrong!' })
+  }
+}
+
