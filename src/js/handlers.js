@@ -1,8 +1,9 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import { fetchAllProducts, fetchCategories } from './products-api';
-import { renderCategories, renderProducts } from './render-function';
-import { activeFirstBtn } from './helpers';
+import { fetchAllProducts, fetchCategories, fetchProductsByCategory } from './products-api';
+import { clearProduct, renderCategories, renderProducts } from './render-function';
+import { activeFirstBtn, changeActiveBtn } from './helpers';
+import { refs } from './refs';
 
 export const initCategories = async () => {
   try {
@@ -17,10 +18,32 @@ export const initCategories = async () => {
 
 export const initProducts = async () => {
   try {
-const {products} = await fetchAllProducts(1);
-renderProducts(products)
+    const { products } = await fetchAllProducts(1);
+    renderProducts(products)
   } catch (error) {
     console.log(error);
-    iziToast.error({message: 'Oops, something went wrong!'})
+    iziToast.error({ message: 'Oops, something went wrong!' })
+  }
+};
+
+export const getProductsByCategory = async (e) => {
+  if (e.target.nodeName !== 'BUTTON') return;
+  const category = e.target.textContent;
+  clearProduct();
+  changeActiveBtn(e.target);
+  refs.divNotFound.classList.remove('not-found--visible');
+  try {
+    if (category === 'All') {
+      const { products } = await fetchAllProducts(1);
+      renderProducts(products);
+    } else {
+      const { products } = await fetchProductsByCategory(category);
+      if (products.length === 0) {
+        refs.divNotFound.classList.add('not-found--visible');
+      }
+      renderProducts(products);
+    }
+  } catch (error) {
+    console.log(error);
   }
 }

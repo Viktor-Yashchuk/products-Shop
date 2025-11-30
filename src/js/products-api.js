@@ -25,3 +25,8 @@ skip: (currentPage - 1) * 12,
   )
 return data
 }
+
+export const fetchProductsByCategory = async (category) => {
+    const { data } = await axios(`${ENDPOINTS.BY_CATEGORY}${category}`);
+    return data;
+}
