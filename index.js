@@ -1,11 +1,11 @@
-import"./assets/styles-JE8YjOlG.js";import{a as c,i as r}from"./assets/vendor-4yCzdkXl.js";const g="https://dummyjson.com/",e={CATEGORIES:"products/category-list",PRODUCTS:"products"};c.defaults.baseURL=g;const m=async()=>{const{data:t}=await c(`${e.CATEGORIES}`);return t},_=async t=>{const{data:s}=await c(`${e.PRODUCTS}`,{params:{limit:12,skip:(t-1)*12}});return s},a={categoryList:document.querySelector(".categories"),productList:document.querySelector(".products")},y=t=>{const s=t.map(o=>`<li class="categories__item">
-   <button class="categories__btn" type="button">${o}</button>
- </li>`).join("");a.categoryList.innerHTML=s},b=t=>{const s=t.map(({id:o,thumbnail:n,tags:i,title:p,brand:d,category:l,price:u})=>`<li class="products__item" data-id="${o}">
-    <img class="products__image" src="${n}" alt="${i}"/>
-    <p class="products__title">${p}</p>
-    <p class="products__brand"><span class="products__brand--bold">Brand:${d}</span></p>
-    <p class="products__category">Category: ${l}</p>
-    <p class="products__price">Price: ${u}$</p>
+import"./assets/styles-JE8YjOlG.js";import{a as c,i as n}from"./assets/vendor-4yCzdkXl.js";const m="https://dummyjson.com/",a={CATEGORIES:"products/category-list",PRODUCTS:"products",BY_CATEGORY:"products/category/"};c.defaults.baseURL=m;const y=async()=>{const{data:t}=await c(`${a.CATEGORIES}`);return t},i=async t=>{const{data:o}=await c(`${a.PRODUCTS}`,{params:{limit:12,skip:(t-1)*12}});return o},L=async t=>{const{data:o}=await c(`${a.BY_CATEGORY}${t}`);return o},e={categoryList:document.querySelector(".categories"),productList:document.querySelector(".products"),divNotFound:document.querySelector(".not-found")},b=t=>{const o=t.map(s=>`<li class="categories__item">
+   <button class="categories__btn" type="button">${s}</button>
+ </li>`).join("");e.categoryList.innerHTML=o},r=t=>{const o=t.map(({id:s,thumbnail:d,tags:l,title:u,brand:p,category:g,price:_})=>`<li class="products__item" data-id="${s}">
+    <img class="products__image" src="${d}" alt="${l}"/>
+    <p class="products__title">${u}</p>
+    <p class="products__brand"><span class="products__brand--bold">Brand:${p}</span></p>
+    <p class="products__category">Category: ${g}</p>
+    <p class="products__price">Price: ${_}$</p>
  </li>
-`).join("");a.productList.insertAdjacentHTML("beforeend",s)},$=()=>{const t=document.querySelector(".categories__btn");t&&t.classList.add("categories__btn--active")},L=async()=>{try{const t=await m();y(["All",...t]),$()}catch(t){console.log(t),r.error({message:"Oops, something went wrong!"})}},S=async()=>{try{const{products:t}=await _(1);b(t)}catch(t){console.log(t),r.error({message:"Oops, something went wrong!"})}};L();S();
+`).join("");e.productList.insertAdjacentHTML("beforeend",o)},f=()=>{e.productList.innerHTML=""},v=()=>{const t=document.querySelector(".categories__btn");t&&t.classList.add("categories__btn--active")},C=t=>{document.querySelectorAll(".categories__btn--active").forEach(s=>s.classList.remove("categories__btn--active")),t.classList.add("categories__btn--active")},T=async()=>{try{const t=await y();b(["All",...t]),v()}catch(t){console.log(t),n.error({message:"Oops, something went wrong!"})}},$=async()=>{try{const{products:t}=await i(1);r(t)}catch(t){console.log(t),n.error({message:"Oops, something went wrong!"})}},h=async t=>{if(t.target.nodeName!=="BUTTON")return;const o=t.target.textContent;f(),C(t.target),e.divNotFound.classList.remove("not-found--visible");try{if(o==="All"){const{products:s}=await i(1);r(s)}else{const{products:s}=await L(o);s.length===0&&e.divNotFound.classList.add("not-found--visible"),r(s)}}catch(s){console.log(s)}};T();$();e.categoryList.addEventListener("click",h);
 //# sourceMappingURL=index.js.map
